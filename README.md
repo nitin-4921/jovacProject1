@@ -1,36 +1,109 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# PlacementIQ
 
-## Getting Started
+PlacementIQ is a modern placement insights platform with a polished Next.js frontend and a FastAPI backend. It provides account auth, a student dashboard, company listings, interview experience content, and OA question management.
 
-First, run the development server:
+## Features
+
+- Responsive Next.js app with animated landing page and dashboards
+- User authentication via signup/login flows
+- Role-based user types: student, senior/placed student, placement officer
+- FastAPI backend with MongoDB persistence
+- JWT access token generation for frontend authentication
+- Dashboard layout with companies, experiences, and OA question sections
+- Full logout support and protected dashboard access
+
+## Tech stack
+
+- Frontend: Next.js 16, React 19, TypeScript, Tailwind CSS, Framer Motion
+- Backend: FastAPI, Uvicorn, Motor, MongoDB
+- Auth: bcrypt password hashing, python-jose JWT tokens
+
+## Repository structure
+
+- `src/app/` - Next.js app routes and page components
+- `src/components/` - shared UI components like sidebar
+- `src/lib/` - client auth utilities
+- `backend/` - FastAPI backend source code
+- `backend/routers/auth.py` - auth routes for signup/login
+- `backend/database.py` - MongoDB connection helper
+- `backend/auth_utils.py` - JWT token helper
+- `backend/requirements.txt` - Python backend dependencies
+
+## Getting started
+
+### Prerequisites
+
+- Node.js 20+ and npm
+- Python 3.11+ or compatible version
+- MongoDB running locally or accessible remotely
+
+### Backend setup
+
+1. Open a terminal in `backend/`
+2. Install Python dependencies:
+
+```bash
+pip install -r backend/requirements.txt
+```
+
+3. Start MongoDB locally or set `MONGO_URL` to your MongoDB connection string.
+4. (Optional) Set `JWT_SECRET` to override the default token secret.
+
+5. Start the FastAPI server:
+
+```bash
+uvicorn backend.main:app --reload --port 8001
+```
+
+The backend exposes:
+
+- `POST /auth/signup` - create a new account
+- `POST /auth/login` - authenticate and receive an access token
+- `GET /` - health check / welcome message
+
+### Frontend setup
+
+1. Install node dependencies in the project root:
+
+```bash
+npm install
+```
+
+2. Start the Next.js development server:
 
 ```bash
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+3. Open the app in your browser at `http://localhost:3000`
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+### Notes
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+- The frontend currently sends auth requests to `http://localhost:8001/auth`.
+- Login/signup store `token` and `user` in `localStorage`.
+- The dashboard is protected using a client-side auth hook.
+- MongoDB database name defaults to `placementiq`.
 
-## Learn More
+## Environment variables
 
-To learn more about Next.js, take a look at the following resources:
+Optional backend variables:
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+- `MONGO_URL` - MongoDB connection URL (default: `mongodb://localhost:27017`)
+- `JWT_SECRET` - secret used to sign JWT tokens
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## Development tips
 
-## Deploy on Vercel
+- Use `npm run lint` to run ESLint on the frontend code.
+- The backend uses `uvicorn` with FastAPI lifecycle hooks to connect/disconnect MongoDB.
+- Update UI pages in `src/app/` and maintain shared logic in `src/lib`.
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+## Future improvements
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+- Add backend authorization middleware for protected routes
+- Create API routes for companies, experiences, and OA questions
+- Add persistent frontend state management and server-side data fetching
+- Add tests for both frontend and backend
+
+## License
+
+This project is currently private.
