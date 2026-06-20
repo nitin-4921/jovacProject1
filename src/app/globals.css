@@ -50,6 +50,8 @@
 }
 
 :root {
+  --font-sans: "Inter", "Segoe UI", Arial, sans-serif;
+  --font-geist-mono: "SFMono-Regular", Consolas, "Liberation Mono", monospace;
   --background: #FAFAF7;
   --foreground: #111827;
   --card: rgba(255, 255, 255, 0.7);

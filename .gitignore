@@ -22,6 +22,8 @@
 
 # Python
 backend/venv/
+__pycache__/
+*.py[cod]
 
 # misc
 .DS_Store
