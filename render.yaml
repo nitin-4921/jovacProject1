@@ -1,0 +1,20 @@
+services:
+  - type: web
+    name: placementiq-frontend
+    env: node
+    root: .
+    buildCommand: npm install && npm run build
+    startCommand: npm run start
+    envVars:
+      - key: NODE_ENV
+        value: production
+
+  - type: web
+    name: placementiq-backend
+    env: python
+    root: backend
+    buildCommand: pip install -r requirements.txt
+    startCommand: uvicorn main:app --host 0.0.0.0 --port $PORT
+    envVars:
+      - key: PYTHONUNBUFFERED
+        value: "1"

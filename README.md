@@ -90,6 +90,36 @@ Optional backend variables:
 
 - `MONGO_URL` - MongoDB connection URL (default: `mongodb://localhost:27017`)
 - `JWT_SECRET` - secret used to sign JWT tokens
+- `CORS_ORIGINS` - comma-separated allowed frontend origins for CORS
+
+Frontend environment variables:
+
+- `NEXT_PUBLIC_API_URL` - backend base URL for auth calls
+
+## Render deployment
+
+This project is configured for Render with a monorepo-style deployment.
+
+1. Create two Render web services:
+   - `placementiq-frontend` with environment `Node`
+   - `placementiq-backend` with environment `Python`
+2. Use `render.yaml` from the repository to auto-configure both services.
+3. Set the following environment variables on Render:
+   - `NEXT_PUBLIC_API_URL` → backend service URL, e.g. `https://placementiq-backend.onrender.com`
+   - `MONGO_URL` → your MongoDB connection string
+   - `JWT_SECRET` → your JWT secret key
+   - `CORS_ORIGINS` → allowed frontend origin, e.g. `https://placementiq-frontend.onrender.com`
+
+### Backend service settings
+
+- `repoPath`: `backend`
+- Build command: `pip install -r backend/requirements.txt`
+- Start command: `uvicorn main:app --host 0.0.0.0 --port $PORT`
+
+### Frontend service settings
+
+- Build command: `npm install && npm run build`
+- Start command: `npm run start`
 
 ## Development tips
 
